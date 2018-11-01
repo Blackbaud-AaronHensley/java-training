@@ -16,12 +16,12 @@ public class Solution {
         for (int i = 0; i < n; i++) {
             char c = s.charAt(i);
             // character is one of the three opening brackets
-            if (c == '[' || c == '{' || c == '(') {
+            if (characterIsABracketType) {
                 stack.push(c);
             }
             // character is one of the three closing brackets
             else {
-                if (!stack.isEmpty() && stack.peek() == getOpeningBracket(c)) {
+                if (stackNotEmptyAndTopOfStackMatchesItsOpeningBracket(stack, c)) {
                     stack.pop();
                 } else {
                     return "NO";
@@ -29,6 +29,15 @@ public class Solution {
             }
         }
         return stack.isEmpty() ? "YES" : "NO";
+    }
+
+    private static boolean characterIsABracketType(String c) {
+        return (c == '[' || c == '{' || c == '(');
+    }
+
+
+    private static boolean stackNotEmptyAndTopOfStackMatchesItsOpeningBracket(Stack<Character> stack, char c) {
+        return !stack.isEmpty() && stack.peek() == getOpeningBracket(c);
     }
 
     private static Character getOpeningBracket(Character closingBracket) {
