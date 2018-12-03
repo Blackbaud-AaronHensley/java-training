@@ -42,7 +42,7 @@ class Solution {
         Node current = null;
         Node next = root;
 
-        while(nextNotNull(next)) {
+        while(nextRootNotNull(next)) {
             current = next;
             next = (current.data < data) ? current.right : current.left;
         }

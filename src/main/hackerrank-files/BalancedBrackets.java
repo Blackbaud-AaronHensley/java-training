@@ -10,13 +10,16 @@ public class Solution {
 
     // Complete the isBalanced function below.
     static String isBalanced(String s) {
-        int n = s.length();
         Stack<Character> stack = new Stack<>();
+        Stream<Character> characterStream = s.chars().mapToObj(c -> (char) c);
 
-        for (int i = 0; i < n; i++) {
-            char c = s.charAt(i);
+        characterStream.filter(Solution::characterIsABracketType)
+                .collect(Collectors.toCollection(Stack::new))
+
+
+        characterStream.forEach(c -> {
             // character is one of the three opening brackets
-            if (characterIsABracketType) {
+            if (characterIsABracketType(c)) {
                 stack.push(c);
             }
             // character is one of the three closing brackets
@@ -24,14 +27,14 @@ public class Solution {
                 if (stackNotEmptyAndTopOfStackMatchesItsOpeningBracket(stack, c)) {
                     stack.pop();
                 } else {
-                    return "NO";
+                    stack.push(c);
                 }
             }
-        }
+        });
         return stack.isEmpty() ? "YES" : "NO";
     }
 
-    private static boolean characterIsABracketType(String c) {
+    private static boolean characterIsABracketType(Character c) {
         return (c == '[' || c == '{' || c == '(');
     }
 
